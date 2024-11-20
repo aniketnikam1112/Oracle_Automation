@@ -1,6 +1,31 @@
 ---
 - name: Oracle Automation 
+  host: all
+  gather_facts: false
+  become: yes
 
+  vars: 
+   user: "oracle"
+   oracle_sid= "testdb1"
+  
+  tasks: 
+  - name: login in to Oracle database and fetch database
+    
+    shell: | 
+        export ORACLE_HOME=/ora01/app/oracle/product/12.1.0.2/db_1
+        export PATH=$ORACLE_HOME/bin:$PATH
+        export ORACLE_SID={{oracle_sid}}
+        echo "
+        set feedback off;
+        set heading off;
+        select DBID,NAME,CREATED,OPEN_MODE,DATABASE_ROLE from v$database;
+        exit;" | sqlplus / as sysdba
+      register: query_output
+      no_log: true
+ 
+  - name: Display output
+    debug:
+      msg: "{{ query_output.stdout }}" 
 
 
 
