@@ -3,6 +3,7 @@
   host: all
   gather_facts: false
   become: yes
+  become_user: "user"
 
   vars: 
    user: "oracle"
