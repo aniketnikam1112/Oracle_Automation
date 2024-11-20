@@ -7,7 +7,7 @@
 
   vars: 
    user: "oracle"
-   oracle_sid= "testdb1"
+   oracle_sid: "testdb1"
   
   tasks: 
   - name: login in to Oracle database and fetch database
